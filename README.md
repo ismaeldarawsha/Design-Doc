@@ -20,26 +20,26 @@ Using publicly available Streptococcus agalactiae genomic assemblies on NCBI we 
 
 # Goals
 The goals of this project are:
-Develop a pipeline that retrieves genome assemblies from NCBI using accession numbers
+* Develop a pipeline that retrieves genome assemblies from NCBI using accession numbers
 
-Evaluate genome quality using CheckM2
+* Evaluate genome quality using CheckM2
 
-Allow users to define custom completeness and contamination thresholds
+* Allow users to define custom completeness and contamination thresholds
 
-Output a filtered list of high-quality genome assemblies
+* Output a filtered list of high-quality genome assemblies
 
-Provide documentation so the pipeline can be easily reproduced
+* Provide documentation so the pipeline can be easily reproduced
 
 # Non-Goals
 The following tasks are outside the scope of this project:
 
-Performing comparative genomic analysis of the filtered genomes.
+* Performing comparative genomic analysis of the filtered genomes.
 
-Developing new genome assembly algorithms.
+* Developing new genome assembly algorithms.
 
-Modifying the internal functionality of CheckM2.
+* Modifying the internal functionality of CheckM2.
 
-Our pipeline focuses only on data retrieval and its quality evaluation/filtering.
+* Our pipeline focuses only on data retrieval and its quality evaluation/filtering.
 
 
 ## Proposed Solution
@@ -87,26 +87,26 @@ The goal is to keep the instructions simple so others can easily use the project
 
 The pipeline workflow will follow these steps:
 
-Input accession numbers
-The user provides a list of genome accession numbers.
+1. Input accession numbers
+   The user provides a list of genome accession numbers.
 
-Retrieve genome assemblies from NCBI
-The pipeline retrieves genome FASTA files using Biopython (Entrez).
+2. Retrieve genome assemblies from NCBI
+   The pipeline retrieves genome FASTA files using Biopython (Entrez).
 
-Store genome assemblies locally
-Files are saved in the project data directory.
+3. Store genome assemblies locally
+   Files are saved in the project data directory.
 
-Run CheckM2 analysis
-CheckM2 evaluates genome completeness and contamination.
+4. Run CheckM2 analysis
+   CheckM2 evaluates genome completeness and contamination.
 
-Parse CheckM2 output
-The pipeline extracts quality scores from the output report.
+5. Parse CheckM2 output
+   The pipeline extracts quality scores from the output report.
 
-Apply quality thresholds
-Genomes are filtered based on completeness and contamination values.
+6. Apply quality thresholds
+   Genomes are filtered based on completeness and contamination values.
 
-Generate results
-The pipeline outputs a summary file containing accession numbers and quality metrics.
+7. Generate results
+   The pipeline outputs a summary file containing accession numbers and quality metrics.
 
 
 ## Milestones
