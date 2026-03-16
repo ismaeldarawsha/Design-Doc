@@ -44,43 +44,44 @@ The following tasks are outside the scope of this project:
 
 ## Proposed Solution
 1. Get accession numbers for Streptococcus agalactiae genomes from NCBI
-We will first collect accession numbers for the S. agalactiae genome assemblies from the NCBI database, and these accession numbers will be the main input for our pipeline.
-The accession numbers can be saved in a simple text file so the program can read them easily.
+* We will first collect accession numbers for the S. agalactiae genome assemblies from the NCBI database, and these accession numbers will be the main input for our pipeline.
+  
+* The accession numbers can be saved in a simple text file so the program can read them easily.
  
 2. Test the pipeline on a small subset of genomes first
-Since there are more than 25,000 genome assemblies available, we will start by using a smaller subset of accession numbers.
-This will help us make sure the genomes download correctly, CheckM2 runs properly, and we understand the output format.
-Testing on a smaller group will also make it easier to debug the code before running the full dataset.
+* Since there are more than 25,000 genome assemblies available, we will start by using a smaller subset of accession numbers.
+* This will help us make sure the genomes download correctly, CheckM2 runs properly, and we understand the output format.
+* Testing on a smaller group will also make it easier to debug the code before running the full dataset.
  
 3. Download the genome assemblies in FASTA format
-Using the accession numbers, the pipeline will download the corresponding genome assemblies from NCBI.
-The genomes will be downloaded in FASTA format and that also works with CheckM2. Automating this step is important because manually downloading thousands of genomes would take too much time.
+* Using the accession numbers, the pipeline will download the corresponding genome assemblies from NCBI.
+* The genomes will be downloaded in FASTA format and that also works with CheckM2. Automating this step is important because manually downloading thousands of genomes would take too much time.
  
 4. Prepare the genome files for analysis
-After the genomes are downloaded, we will make sure the files are organized so CheckM2 can read them properly.
-We will also check if any genomes failed to download or if files are missing sequence data.
+* After the genomes are downloaded, we will make sure the files are organized so CheckM2 can read them properly.
+* We will also check if any genomes failed to download or if files are missing sequence data.
  
 5. Run CheckM2 on the genome assemblies
-Once the FASTA files are ready, we will run CheckM2 to estimate genome completeness and contamination.
-CheckM2 will analyze each genome and produce a report with these quality scores.
-This is the main step of the project because it tells us which genomes are high quality and which ones are not.
+* Once the FASTA files are ready, we will run CheckM2 to estimate genome completeness and contamination.
+* CheckM2 will analyze each genome and produce a report with these quality scores.
+* This is the main step of the project because it tells us which genomes are high quality and which ones are not.
  
 6. Read and organize the CheckM2 results
-After CheckM2 finishes running, the pipeline will read the output report.
-We will extract the accession number, completeness score, and contamination score for each genome. And these values will then be written into a simple output table so they are easy to review.
+* After CheckM2 finishes running, the pipeline will read the output report.
+* We will extract the accession number, completeness score, and contamination score for each genome. And these values will then be written into a simple output table so they are easy to review.
  
 7. Filter genomes using quality thresholds
-The user will be able to set a minimum completeness value and a maximum contamination value.
-The pipeline will compare each genome’s scores to these thresholds, and genomes that meet the requirements will be kept, while genomes that fail will be filtered out.
+* The user will be able to set a minimum completeness value and a maximum contamination value.
+* The pipeline will compare each genome’s scores to these thresholds, and genomes that meet the requirements will be kept, while genomes that fail will be filtered out.
  
 8. Create the final output file
-The final output file will list each accession number along with its completeness and contamination scores.
-It will also show which genomes passed the filtering criteria.
+* The final output file will list each accession number along with its completeness and contamination scores.
+* It will also show which genomes passed the filtering criteria.
  
 9. Provide simple documentation on GitHub
-We will include clear instructions in the GitHub repository explaining how to run the pipeline.
-The documentation will describe what inputs are needed and how users can change the filtering thresholds.
-The goal is to keep the instructions simple so others can easily use the project.
+* We will include clear instructions in the GitHub repository explaining how to run the pipeline.
+* The documentation will describe what inputs are needed and how users can change the filtering thresholds.
+* The goal is to keep the instructions simple so others can easily use the project.
 
 
 ### Workflow
