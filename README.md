@@ -113,5 +113,6 @@ The pipeline workflow will follow these steps:
 ## Milestones
 
 (subject to change)
-<img width="576" height="334" alt="image" src="https://github.com/user-attachments/assets/9bb668fe-4f4a-43a0-84f6-0c7aac6498e7" />
+<img width="575" height="338" alt="image" src="https://github.com/user-attachments/assets/d5a75d01-6868-4e22-a692-26ae64bd11da" />
+
 
