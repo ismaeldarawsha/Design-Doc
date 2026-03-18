@@ -108,6 +108,12 @@ The pipeline workflow will follow these steps:
 
 7. Generate results
    The pipeline outputs a summary file containing accession numbers and quality metrics.
+#### Dependencies:
+Python (main scripting)
+Biopython Entrez (NCBI genome retrieval)
+CheckM2 (genome quality assessment)
+Pandas (data filtering & analysis)
+
 
 
 ## Milestones
