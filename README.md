@@ -92,7 +92,7 @@ The pipeline workflow will follow these steps:
    The user provides a list of genome accession numbers.
 
 2. Retrieve genome assemblies from NCBI
-   The pipeline retrieves genome FASTA files using Biopython (Entrez).
+   The pipeline retrieves genome FASTA files using Biopython (Entrez or Datasets tool).
 
 3. Store genome assemblies locally
    Files are saved in the project data directory.
