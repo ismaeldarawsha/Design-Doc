@@ -1,0 +1,2 @@
+Ran below to download the genomes:
+datasets download genome taxon "Streptococcus agalactiae" --include genome --filename genomes.zip
