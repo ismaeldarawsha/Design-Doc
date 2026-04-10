@@ -6,7 +6,11 @@
 # How to install CheckM2
 
 1. In order to download Checkm2, you need to have Anaconda downloaded to your system. Enter the following code into your bash terminal in VS code
-print(wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh)
+
+```
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+```
+
 2. Now, install it by running the next line in your terminal
 (bash Miniconda3-latest-Linux-x86_64.sh)
 Press enter to scroll down, then type 'yes' to accept the license
