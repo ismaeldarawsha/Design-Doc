@@ -2,7 +2,9 @@
 
 
 # Dependencies
+Python: https://www.python.org/downloads/
 Miniconda: https://docs.conda.io/projects/conda/en/stable/user-guide/install/index.html
+Pandas: https://pypi.org/project/pandas/
 
 # How to install CheckM2
 
