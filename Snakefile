@@ -14,15 +14,30 @@ rule all:
         "results/all_results.tsv",
         "results/passed_results.tsv"
 
-# Step 1: Download genomes
+# Step 1: Download genomes (USE THE SUBSAMPLE CODE FOR QUICKER TEST RUN)
+#rule download_genomes:
+#    output:
+#        "data/genomes.zip"
+#    shell:
+#        """
+#        mkdir -p data
+#        datasets download genome taxon "{TAXON}" --include genome --filename {output}
+#        """
 rule download_genomes:
     output:
         "data/genomes.zip"
     shell:
         """
         mkdir -p data
-        datasets download genome taxon "{TAXON}" --include genome --filename {output}
+
+        datasets summary genome taxon "{TAXON}" --limit 20 --as-json-lines \
+        | dataformat tsv genome --fields accession --elide-header \
+        > data/accessions.txt
+
+        datasets download genome accession --inputfile data/accessions.txt --include genome --filename {output}
         """
+
+#-----------------------------
 
 # Step 2: Unzip genomes
 rule unzip_genomes:
@@ -48,6 +63,8 @@ rule flatten_fasta:
         rm -rf data/genomes_flat
         mkdir -p data/genomes_flat
         find {input} -name "*.fna" -exec cp {{}} data/genomes_flat/ \\;
+        #TO ONLY RUN ON 20 SUBSAMPLE, USE THE CODE BELOW
+        #find {input} -name "*.fna" | head -n 20 | xargs -I {{}} cp {{}} data/genomes_flat/
         """
 
 # Step 4: Run CheckM2
@@ -55,10 +72,11 @@ rule run_checkm2:
     input:
         "data/genomes_flat"
     output:
-        directory("results/checkm2_output")
+        "results/checkm2_output/quality_report.tsv"
     shell:
         """
         rm -rf results/checkm2_output
+        mkdir -p results/checkm2_output
         checkm2 predict \
             --input {input} \
             --output-directory results/checkm2_output \
