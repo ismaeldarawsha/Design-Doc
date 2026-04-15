@@ -119,3 +119,4 @@ rule save_passed_results:
 #datasets
 #checkm2
 #pandas
+#snakemake --cores 6
