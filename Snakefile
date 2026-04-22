@@ -3,7 +3,7 @@ import pandas as pd
 
 #organism we are downloading genomes for
 TAXON = "Streptococcus agalactiae"
-THREADS = 4
+THREADS = 18
 #filtering thresholds for genome quality
 MIN_COMPLETENESS = 95.0
 MAX_CONTAMINATION = 0.12
@@ -77,7 +77,8 @@ rule all:
 # Step 4: Run CheckM2
 rule run_checkm2:
     input:
-        "data/genomes_flat"
+            "/home/ayounis/checkm2/genomes_combine"
+         #"data/genomes_flat"
     output:
         "results/checkm2_output/quality_report.tsv"
     shell:
@@ -126,4 +127,8 @@ rule save_passed_results:
 #datasets
 #checkm2
 #pandas
+<<<<<<< Updated upstream
 #snakemake --cores 6
+=======
+#snakemake --cores 6source ~/.bashrc
+>>>>>>> Stashed changes
