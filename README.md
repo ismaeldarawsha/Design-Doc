@@ -2,7 +2,11 @@
 
 
 # Dependencies
+The following packages must be downloaded in order to run the pipeline.
+
 Python: https://www.python.org/downloads/
+
+Snakemake: https://snakemake.readthedocs.io/en/stable/getting_started/installation.html
 
 Miniconda: https://docs.conda.io/projects/conda/en/stable/user-guide/install/index.html
 
