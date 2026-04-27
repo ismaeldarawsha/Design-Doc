@@ -12,7 +12,11 @@ Miniconda: https://docs.conda.io/projects/conda/en/stable/user-guide/install/ind
 
 Pandas: https://pypi.org/project/pandas/
 
-matplotlib
+matplotlib: https://matplotlib.org/stable/install/index.html
+
+Numpy: https://numpy.org/install/
+
+NCBI Datasets CLI: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/download-and-install/
 
 # How to install CheckM2
 
