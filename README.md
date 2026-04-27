@@ -12,6 +12,8 @@ Miniconda: https://docs.conda.io/projects/conda/en/stable/user-guide/install/ind
 
 Pandas: https://pypi.org/project/pandas/
 
+matplotlib
+
 # How to install CheckM2
 
 1. In order to download Checkm2, you need to have Anaconda downloaded to your system. Enter the following code into your bash terminal in VS code
