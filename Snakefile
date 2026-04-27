@@ -12,8 +12,9 @@ MAX_CONTAMINATION = 0.12
 rule all:
     input:
         "results/all_results.tsv",
-        "results/passed_results.tsv"
-
+        "results/passed_results.tsv",
+        "results/contamination_hist_percent.png", #added two more outputs, histogram and scatterplot to visualize raw data
+        "results/completeness_scatterplot.png"
 #RUN steps 1-3 if: 
 #    you need to download genomes (WARNING: large datasets might not run to completion)
 #    unzip files + flatten to prepare for step 4 (CheckM2)
@@ -118,7 +119,51 @@ rule save_passed_results:
         ]
 
         passed.to_csv(output[0], sep="\t", index=False)
+#---------------------------- STEP 7 (visualize data as scatterplot of completeness and histogram of contamination) ------------
+# Step 7:
+rule make_plots:
+    input:
+        "results/all_results.tsv"
+    output:
+        contamination_hist="results/contamination_hist_percent.png",
+        completeness_scatter="results/completeness_scatterplot.png"
+    run:
+        import pandas as pd
+        import matplotlib
+        matplotlib.use("Agg")  # lets matplotlib save plots without opening a window
+        import matplotlib.pyplot as plt
+        import numpy as np
 
+        df = pd.read_csv(input[0], sep="\t")
+
+        df["Completeness"] = pd.to_numeric(df["Completeness"], errors="coerce")
+        df["Contamination"] = pd.to_numeric(df["Contamination"], errors="coerce")
+
+        df = df.dropna(subset=["Completeness", "Contamination"])
+
+        df["Contamination_percent"] = df["Contamination"] * 100
+
+        #contamination histogram
+        bins = np.arange(0, 101, 1)
+
+        plt.figure()
+        plt.hist(df["Contamination_percent"], bins=bins)
+        plt.title("Contamination Distribution (%)")
+        plt.xlabel("Contamination (%)")
+        plt.ylabel("Number of Genomes")
+        plt.xlim(0, 100)
+        plt.savefig(output.contamination_hist, dpi=300, bbox_inches="tight")
+        plt.close()
+
+        #Completeness Scatterplot
+        plt.figure()
+        plt.scatter(range(len(df)), df["Completeness"], alpha=0.5, s=8) #adjust s = # to size each dot in the scatterplot, depending on sample size
+        plt.title("Completeness Scatterplot")
+        plt.xlabel("Genome Index")
+        plt.ylabel("Completeness (%)")
+        plt.ylim(0, 100)
+        plt.savefig(output.completeness_scatter, dpi=300, bbox_inches="tight")
+        plt.close()
 #how to run:
 # snakemake --cores 4
 
@@ -127,8 +172,6 @@ rule save_passed_results:
 #datasets
 #checkm2
 #pandas
-<<<<<<< Updated upstream
+
 #snakemake --cores 6
-=======
-#snakemake --cores 6source ~/.bashrc
->>>>>>> Stashed changes
+
