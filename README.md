@@ -80,20 +80,23 @@ if it installed, it should run.
 # How to download Genomes
 
 To download all of our genomes, uncomment rules 1-3 in the Snakefile (the first download_genomes rule, unzip_genomes, & flatten_fasta)
-OR to manually download the genomes (since datasets tends to crash before completing on too many genomes), run this code: 
-datasets download genome taxon "Streptococcus agalactiae" \
-    --include genome \
-    --filename genomes.zip
-unzip -q genomes.zip -d genomes
-then make it into a single directory
-mkdir -p genomes_flat
 
-find genomes -name "*.fna" -exec cp {} genomes_flat/ \;
 
 then run the following code in the terminal. This will download all available genomes for the selected taxon, unzip the files, then collect all of the fasta files into data/genomes_flat/
 
 ```
 snakemake data/genomes_flat --cores 4
+```
+OR to manually download all the genomes (since datasets tends to crash before completing on too many genomes), run this code: 
+```
+datasets download genome taxon "Streptococcus agalactiae" \
+    --include genome \
+    --filename genomes.zip
+unzip -q genomes.zip -d genomes
+#then make it into a single directory
+mkdir -p genomes_flat
+
+find genomes -name "*.fna" -exec cp {} genomes_flat/ \;
 ```
 
 To download a small subsample (20 genomes) for faster testing, uncomment the second download_genomes rule included in the file then run the above code. This will create a smaller genome dataset that is useful for testing the pipeline. Alternatively, you can use the sample_data file provided. 
