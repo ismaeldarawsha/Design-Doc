@@ -110,17 +110,21 @@ rule all:
 # -----------------------------------------------------------------------------------------------------------
 # -----------------------------------------------------------------------------------------------------------
 # -----------------------------------------------------------------------------------------------------------
-# Step 4: Run CheckM2
+# Step 4: Run CheckM2 to evaluate genome quality
 rule run_checkm2:
     input:
-            "/home/ayounis/checkm2/genomes_combine"
-         #"data/genomes_flat"
+        "data/genomes_flat"  # directory of genome FASTA files (.fna)
     output:
         "results/checkm2_output/quality_report.tsv"
     shell:
         """
+        #remove old results to avoid conflicts
         rm -rf results/checkm2_output
+
+        #create output directory
         mkdir -p results/checkm2_output
+
+        #run CheckM2 on all genomes in the input directory
         checkm2 predict \
             --input {input} \
             --output-directory results/checkm2_output \
@@ -128,7 +132,8 @@ rule run_checkm2:
             --force
         """
 
-# Step 5: Save all results
+
+# Step 5: Save full CheckM2 output
 rule save_all_results:
     input:
         "results/checkm2_output/quality_report.tsv"
@@ -136,67 +141,93 @@ rule save_all_results:
         "results/all_results.tsv"
     shell:
         """
+        #simply copy the full CheckM2 output for easier access
         cp {input} {output}
         """
 
-# Step 6: Filter results that pass thresholds
+
+# Step 6: Filter genomes based on quality thresholds
 rule save_passed_results:
     input:
         "results/checkm2_output/quality_report.tsv"
     output:
         "results/passed_results.tsv"
     run:
+        #read CheckM2 output table (tab-separated)
         df = pd.read_csv(input[0], sep="\t")
 
+        #apply filtering conditions:
+        # - keep genomes with high completeness
+        # - keep genomes with low contamination
         passed = df[
             (df["Completeness"] >= MIN_COMPLETENESS) &
             (df["Contamination"] <= MAX_CONTAMINATION)
         ]
 
+        # save only the genomes that passed filtering
         passed.to_csv(output[0], sep="\t", index=False)
 #---------------------------- STEP 7 (visualize data as scatterplot of completeness and histogram of contamination) ------------
 # Step 7:
 rule make_plots:
     input:
-        "results/all_results.tsv"
+        "results/all_results.tsv"  # uses the full (unfiltered) dataset
     output:
         contamination_hist="results/contamination_hist_percent.png",
         completeness_scatter="results/completeness_scatterplot.png"
     run:
         import pandas as pd
         import matplotlib
-        matplotlib.use("Agg")  # lets matplotlib save plots without opening a window
+        matplotlib.use("Agg")  #allows plots to be saved without opening a GUI (important for servers)
         import matplotlib.pyplot as plt
         import numpy as np
 
+        # load CheckM2 results table
         df = pd.read_csv(input[0], sep="\t")
 
+        #make sure columns are numeric (in case of formatting issues)
         df["Completeness"] = pd.to_numeric(df["Completeness"], errors="coerce")
         df["Contamination"] = pd.to_numeric(df["Contamination"], errors="coerce")
 
+        #remove rows with missing values in key columns
         df = df.dropna(subset=["Completeness", "Contamination"])
 
+        # convert contamination from fraction to percent (e.g., 0.12 → 12%)
         df["Contamination_percent"] = df["Contamination"] * 100
 
-        #contamination histogram
+        # Contamination Histogram
+
+        # create bins from 0–100% in 1% increments
         bins = np.arange(0, 101, 1)
 
         plt.figure()
         plt.hist(df["Contamination_percent"], bins=bins)
+
         plt.title("Contamination Distribution (%)")
         plt.xlabel("Contamination (%)")
         plt.ylabel("Number of Genomes")
-        plt.xlim(0, 100)
+
+        plt.xlim(0, 100)  #make sure full percent range is shown
+
+        #save figure to Snakemake output path
         plt.savefig(output.contamination_hist, dpi=300, bbox_inches="tight")
         plt.close()
 
-        #Completeness Scatterplot
+
+        # Completeness Scatterplot
+
         plt.figure()
-        plt.scatter(range(len(df)), df["Completeness"], alpha=0.5, s=8) #adjust s = # to size each dot in the scatterplot, depending on sample size
+
+        # x-axis = genome index, y-axis = completeness
+        # s controls dot size (increase if small dataset, decrease if large dataset)
+        plt.scatter(range(len(df)), df["Completeness"], alpha=0.5, s=8)
+
         plt.title("Completeness Scatterplot")
         plt.xlabel("Genome Index")
         plt.ylabel("Completeness (%)")
-        plt.ylim(0, 100)
+
+        plt.ylim(0, 100)  # completeness is bounded between 0–100%
+
+        # save figure
         plt.savefig(output.completeness_scatter, dpi=300, bbox_inches="tight")
         plt.close()
 #how to run:
