@@ -87,7 +87,7 @@ then run the following code in the terminal. This will download all available ge
 ```
 snakemake data/genomes_flat --cores 4
 ```
-OR to manually download all the genomes (since datasets tends to crash before completing on too many genomes), run this code: 
+OR to manually download all the genomes (since datasets tends to crash before completing on too many genomes), run this code in the command line: 
 ```
 datasets download genome taxon "Streptococcus agalactiae" \
     --include genome \
