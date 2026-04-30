@@ -28,6 +28,8 @@ rule all:
 ##        mkdir -p data
 ##        datasets download genome taxon "{TAXON}" --include genome --filename {output}
 ##        """
+#*************************************************************************************************************
+# UNCOMMENT this block below and STEP 2 STEP 3 to download and run snakemake on a subsample 
 #rule download_genomes:
 #    output:
 #        "data/genomes.zip"
@@ -41,7 +43,7 @@ rule all:
 #
 #        datasets download genome accession --inputfile data/accessions.txt --include genome --filename {output}
 #        """
-#
+#*************************************************************************************************************
 ##-----------------------------
 #
 ## Step 2: Unzip genomes
