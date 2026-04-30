@@ -80,6 +80,15 @@ if it installed, it should run.
 # How to download Genomes
 
 To download all of our genomes, uncomment rules 1-3 in the Snakefile (the first download_genomes rule, unzip_genomes, & flatten_fasta)
+OR to manually download the genomes, run this code: 
+datasets download genome taxon "Streptococcus agalactiae" \
+    --include genome \
+    --filename genomes.zip
+unzip -q genomes.zip -d genomes
+then make it into a single directory
+mkdir -p genomes_flat
+
+find genomes -name "*.fna" -exec cp {} genomes_flat/ \;
 
 then run the following code in the terminal. This will download all available genomes for the selected taxon, unzip the files, then collect all of the fasta files into data/genomes_flat/
 
