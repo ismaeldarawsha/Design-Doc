@@ -1,6 +1,0 @@
-Ran below to download the genomes:
-datasets download genome taxon "Streptococcus agalactiae" --include genome --filename genomes.zip
-Abdul (before presentation):
-Run CheckM2 on a small subset of genome FASTA files to confirm output format (completeness and contamination).
-Start building a Snakemake Snakefile that defines rules to: take genome FASTA files as input, run CheckM2 automatically, and generate organized output files per genome.
-Configure the Snakefile to be reproducible for large processing. 
