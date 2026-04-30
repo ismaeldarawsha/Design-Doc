@@ -80,7 +80,7 @@ if it installed, it should run.
 # How to download Genomes
 
 To download all of our genomes, uncomment rules 1-3 in the Snakefile (the first download_genomes rule, unzip_genomes, & flatten_fasta)
-OR to manually download the genomes, run this code: 
+OR to manually download the genomes (since datasets tends to crash before completing on too many genomes), run this code: 
 datasets download genome taxon "Streptococcus agalactiae" \
     --include genome \
     --filename genomes.zip
@@ -96,7 +96,7 @@ then run the following code in the terminal. This will download all available ge
 snakemake data/genomes_flat --cores 4
 ```
 
-To download a small subsample (20 genomes) for faster testing, uncomment the second download_genomes rule included in the file then run the above code. This will create a smaller genome dataset that is useful for testing the pipeline.
+To download a small subsample (20 genomes) for faster testing, uncomment the second download_genomes rule included in the file then run the above code. This will create a smaller genome dataset that is useful for testing the pipeline. Alternatively, you can use the sample_data file provided. 
 
 
 
