@@ -99,7 +99,10 @@ mkdir -p genomes_flat
 find genomes -name "*.fna" -exec cp {} genomes_flat/ \;
 ```
 
-To download a small subsample (20 genomes) for faster testing, uncomment the second download_genomes rule included in the file then run the above code. This will create a smaller genome dataset that is useful for testing the pipeline. Alternatively, you can use the sample_data file provided. 
+To download a small subsample (20 genomes) for faster testing, uncomment the second download_genomes rule included in the file then run the code below. This will create a smaller genome dataset that is useful for testing the pipeline and run the entire pipeline on it at once. Alternatively, you can use the sample_data file provided. 
+```
+snakemake --cores 4
+```
 
 
 
