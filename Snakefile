@@ -1,12 +1,45 @@
-#pandas for reading and filtering the CheckM2 output table
+# pandas used to read and filter the CheckM2 output table (TSV file)
 import pandas as pd
 
-#organism we are downloading genomes for
+# USER-DEFINED SETTINGS
+
+# Organism (taxon) to download genomes for when using the download step
+# You can change this to any organism supported by NCBI
+# Example: "Escherichia coli", "Staphylococcus aureus"
 TAXON = "Streptococcus agalactiae"
+
+
+# Number of CPU threads to use when running CheckM2
+# Increase this if you have more cores available (faster runtime)
+# Decrease if running on a smaller machine/server
 THREADS = 18
-#filtering thresholds for genome quality
+
+# FILTERING THRESHOLDS
+
+# Minimum genome completeness (%) required to pass filtering
+# Higher value = stricter (fewer genomes pass, higher quality)
+# Lower value = more lenient (more genomes pass, but may include lower-quality assemblies)
 MIN_COMPLETENESS = 95.0
+
+
+# Maximum contamination allowed
+#0.12 = 12% contamination
+# Lower value = stricter filtering
+# If too few genomes pass, consider increasing this slightly
 MAX_CONTAMINATION = 0.12
+
+# Adjust MIN_COMPLETENESS if:
+# - You need very high-quality genomes --> increase 
+# - Too many genomes are being filtered out --> decrease
+
+# Adjust MAX_CONTAMINATION if:
+# - You want cleaner genomes --> decrease
+# - Too few genomes pass filtering --> increase
+
+# NOTE:
+#Completeness is usually high across datasets,
+#but contamination often varies widely (sometimes bimodal),
+#so MAX_CONTAMINATION is often the more sensitive parameter.
 
 #snakemake will run everything needed to produce these files
 rule all:
